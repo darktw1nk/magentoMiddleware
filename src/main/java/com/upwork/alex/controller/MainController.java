@@ -1,6 +1,8 @@
 package com.upwork.alex.controller;
 
 import com.sun.deploy.net.HttpResponse;
+import com.upwork.alex.json.registration.RegistrationRequest;
+import com.upwork.alex.json.registration.RegistrationResponce;
 import org.apache.http.Header;
 import org.apache.http.ProtocolException;
 import org.apache.http.client.CookieStore;
@@ -23,6 +25,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.net.HttpCookie;
 import java.util.HashMap;
@@ -36,13 +39,9 @@ public class MainController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Object register(@RequestParam(value = "firstname", required = true) String firstname,
-                           @RequestParam(value = "middlename", required = false, defaultValue = "") String middlename,
-                           @RequestParam(value = "lastname", required = true) String lastname,
-                           @RequestParam(value = "email", required = true) String email,
-                           @RequestParam(value = "password", required = true) String password,
-                           @RequestParam(value = "subscribed", required = false, defaultValue = "false") Boolean subscribed) {
+    public RegistrationResponce register(@Valid @RequestBody RegistrationRequest request) {
         String result = "error";
+        logger.debug(request.toString());
         String url = "http://54.172.134.28/customer/account/create/";
 
         try {
@@ -65,17 +64,17 @@ public class MainController {
 
             MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
             map.add("form_key", formKey);
-            map.add("firstname", firstname);
-            map.add("middlename", middlename);
-            map.add("lastname", lastname);
-            map.add("email", email);
-            map.add("password", password);
-            map.add("confirmation", password);
-            map.add("is_subscribed", subscribed ? "1" : "0");
+            map.add("firstname", request.getFirstname());
+            map.add("middlename", request.getMiddlename());
+            map.add("lastname", request.getLastname());
+            map.add("email", request.getEmail());
+            map.add("password", request.getPassword());
+            map.add("confirmation", request.getPassword());
+            map.add("is_subscribed", request.getSubscribed() ? "1" : "0");
 
-            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+            HttpEntity<MultiValueMap<String, String>> magentoRequest = new HttpEntity<>(map, headers);
 
-            logger.debug(request.toString());
+            logger.debug(magentoRequest.toString());
 
             CloseableHttpClient httpClient = HttpClientBuilder
                     .create()
@@ -92,7 +91,7 @@ public class MainController {
 
                                 Header[] setCookieHeaders = response.getHeaders("Set-Cookie");
                                 StringBuilder cookie = new StringBuilder();
-                                for(Header header : setCookieHeaders){
+                                for (Header header : setCookieHeaders) {
                                     List<HttpCookie> parcedCookie = HttpCookie.parse(header.getValue());
                                     cookie.append(parcedCookie.get(0).getName()).append("=").append(parcedCookie.get(0).getValue()).append(";");
                                     logger.debug(header.getValue());
@@ -100,7 +99,7 @@ public class MainController {
                                 }
                                 logger.debug(cookie.toString());
                                 request.removeHeaders("Cookie");
-                              //  request.setHeader("Cookie",cookie.toString());
+                                //  request.setHeader("Cookie",cookie.toString());
 
                                 return true;
                             }
@@ -122,11 +121,10 @@ public class MainController {
             HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory(httpClient);
 
             RestTemplate restTemplate = new RestTemplate(factory);
-            ResponseEntity<String> response = restTemplate.postForEntity("http://54.172.134.28/customer/account/createpost/", request, String.class);
+            ResponseEntity<String> response = restTemplate.postForEntity("http://54.172.134.28/customer/account/createpost/", magentoRequest, String.class);
 
             String responseHtml = response.getBody();
-            logger.debug(responseHtml);
-            if (responseHtml.contains("Welcome, " + firstname)) {
+            if (responseHtml.contains("Welcome, " + request.getFirstname())) {
                 result = "success";
             } else {
                 result = "error";
@@ -136,6 +134,6 @@ public class MainController {
         }
         logger.debug("request completed");
 
-        return result;
+        return new RegistrationResponce(result);
     }
 }
