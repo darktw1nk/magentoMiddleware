@@ -1,6 +1,5 @@
 package com.upwork.alex.network.registration;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

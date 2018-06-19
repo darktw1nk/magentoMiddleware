@@ -30,7 +30,7 @@ import java.io.IOException;
 
 @Service
 public class MagentoService {
-    private final static Logger logger = LoggerFactory.getLogger(MagentoService.class);
+    private static final Logger logger = LoggerFactory.getLogger(MagentoService.class);
 
     @Autowired
     MagentoConfiguration configuration;

@@ -14,8 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 public class MagentoController {
-
-    private final static Logger logger = LoggerFactory.getLogger(MagentoController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MagentoController.class);
 
     @Autowired
     MagentoService magentoService;
