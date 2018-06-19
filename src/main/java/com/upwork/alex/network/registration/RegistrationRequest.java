@@ -1,4 +1,4 @@
-package com.upwork.alex.json.registration;
+package com.upwork.alex.network.registration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,6 +19,18 @@ public class RegistrationRequest {
     @Size(min = 6,max = 256)
     private String password;
     private Boolean subscribed = false;
+
+    public RegistrationRequest(@NotEmpty String firstname, String middlename, @NotEmpty String lastname, @NotEmpty @Email String email, @NotEmpty @Size(min = 6, max = 256) String password, Boolean subscribed) {
+        this.firstname = firstname;
+        this.middlename = middlename;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.subscribed = subscribed;
+    }
+
+    public RegistrationRequest() {
+    }
 
     public String getFirstname() {
         return firstname;

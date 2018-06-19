@@ -1,4 +1,4 @@
-package com.upwork.alex.json.registration;
+package com.upwork.alex.network.registration;
 
 public class RegistrationResponce {
     private String status;

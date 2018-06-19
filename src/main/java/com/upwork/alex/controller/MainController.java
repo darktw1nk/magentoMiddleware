@@ -1,14 +1,10 @@
 package com.upwork.alex.controller;
 
-import com.sun.deploy.net.HttpResponse;
-import com.upwork.alex.json.registration.RegistrationRequest;
-import com.upwork.alex.json.registration.RegistrationResponce;
+
+import com.upwork.alex.network.registration.RegistrationRequest;
+import com.upwork.alex.network.registration.RegistrationResponce;
 import org.apache.http.Header;
 import org.apache.http.ProtocolException;
-import org.apache.http.client.CookieStore;
-import org.apache.http.client.config.CookieSpecs;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.*;
 import org.apache.http.protocol.HttpContext;
 import org.jsoup.Connection;
@@ -26,11 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.net.HttpCookie;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class MainController {

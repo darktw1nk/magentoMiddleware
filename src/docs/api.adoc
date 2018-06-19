@@ -1,0 +1,15 @@
+== Example of request
+
+include::{snippets}/home/http-request.adoc[]
+
+== Will get responce
+
+include::{snippets}/home/http-response.adoc[]
+
+== Request have next fields
+
+include::{snippets}/home/request-fields.adoc[]
+
+== Response have next fields
+
+include::{snippets}/home/response-fields.adoc[]
