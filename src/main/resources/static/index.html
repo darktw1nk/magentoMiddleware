@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <title>"Pretty" UI</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>Registration form</h2>
+        <p class="lead">Also visit our <a href="api.html">API docs</a></p>
+    </div>
+
+
+    <div class="col-md-12 ">
+        <form class="needs-validation" novalidate="">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 mb-3">
+                    <label for="firstName">First name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="First name" value=""
+                           required="">
+                    <div class="invalid-feedback">
+                        Valid first name is required.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 mb-3">
+                    <label for="middleName">Middle name <span class="text-muted">(Optional)</span></label>
+                    <input type="text" class="form-control" id="middleName" placeholder="Middle name" value="">
+                    <div class="invalid-feedback">
+                        Valid middle name is required.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 mb-3">
+                    <label for="lastName">Last name</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="Last name" value="" required="">
+                    <div class="invalid-feedback">
+                        Valid last name is required.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 mb-3">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com" required="">
+                    <div class="invalid-feedback">
+                        Please enter a valid email address for shipping updates.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 mb-3">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="******" required=""
+                           minlength="6" maxlength="256">
+                    <div class="invalid-feedback" style="width: 100%;">
+                        Password should be from 6 to 256 digits and same with Password Confirmation field
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 mb-3">
+                    <label for="confirmation">Password confirmation</label>
+                    <input type="password" class="form-control" id="confirmation" placeholder="******" required=""
+                           minlength="6" maxlength="256">
+                    <div class="invalid-feedback" style="width: 100%;">
+                        Password should be from 6 to 256 digits and same with Password Confirmation field
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mb-2">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="custom-control custom-checkbox">
+
+                        <input type="checkbox" class="custom-control-input" id="subscription">
+                        <label class="custom-control-label" for="subscription">Sign Up for Newsletter</label>
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-2">
+            <div class="row mb-4">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Register</button>
+                </div>
+            </div>
+            <div class="row" id="resultContainer">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="alert alert-success" role="alert" id="resultSuccess" style="display: none">
+                        Your account have been registered!
+                    </div>
+                    <div class="alert alert-danger" role="alert" id="resultInternalError" style="display: none">
+                        Sorry, server got internal error while processing your request
+                    </div>
+                    <div class="alert alert-danger" role="alert" id="resultExternalError" style="display: none">
+                        Sorry, can not register your account
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+<script>
+    (function () {
+        'use strict';
+
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    if (form.checkValidity() === true) {
+                        var dataObject = {};
+                        dataObject.firstname = document.getElementById("firstName").value;
+                        dataObject.middlename = document.getElementById("middleName").value;
+                        dataObject.lastname = document.getElementById("lastName").value;
+                        dataObject.email = document.getElementById("email").value;
+                        dataObject.password = document.getElementById("password").value;
+                        dataObject.subscribed = document.getElementById("subscription").checked;
+
+                        $.ajax({
+                            url: "/register",
+                            type: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify(dataObject),
+                            success: function(data){
+                                console.log(data);
+                                console.log(data.status);
+                                if(data.status=="success"){
+                                    $("#resultSuccess").show();
+                                    $("#resultSuccess").fadeOut(5000);
+                                } else {
+                                    $("#resultExternalError").show();
+                                    $("#resultExternalError").fadeOut(5000);
+                                }
+                            },
+                            error: function(data){
+                                console.log(data);
+                                $("#resultInternalError").show();
+                                $("#resultInternalError").fadeOut(5000);
+                            }
+                        });
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+
+    function checkSamePasswords() {
+        var password = document.getElementById("password");
+        var confirmation = document.getElementById("confirmation");
+
+        if (password.value == confirmation.value) {
+            password.setCustomValidity("");
+            confirmation.setCustomValidity("");
+        } else {
+            password.setCustomValidity("Error");
+            confirmation.setCustomValidity("Error");
+        }
+    }
+
+    window.onload = function () {
+        document.getElementById("password").onchange = checkSamePasswords;
+        document.getElementById("confirmation").onchange = checkSamePasswords;
+    }
+</script>
+</body>
+</html>
