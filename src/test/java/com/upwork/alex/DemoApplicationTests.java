@@ -1,7 +1,7 @@
 package com.upwork.alex;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.upwork.alex.controller.MainController;
+import com.upwork.alex.controller.MagentoController;
 import com.upwork.alex.network.registration.RegistrationRequest;
 import com.upwork.alex.network.registration.RegistrationRequestBuilder;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(MainController.class)
+@WebMvcTest(MagentoController.class)
 @AutoConfigureRestDocs(outputDir = "target/restdocs")
 public class DemoApplicationTests {
 
